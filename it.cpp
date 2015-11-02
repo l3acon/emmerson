@@ -20,16 +20,13 @@
 
 //ma stuff
 #include "colors.h"
-#include "command.h"
+#include "commands.h"
 
 #define BUFFLEN 180
 #define IPRINT(x) printf(x); fflush(stdout);
 
 void get_input( std::vector<char> &buff);
 void ignore_sigint( int ignore);
-void routeExit( std::string &s){ IPRINT("goodbye\n"); exit(0); }
-void routeHelp( std::string &s){ IPRINT("This is the help menu:\n\tsomething\n\tsomething\n\tsomething\n"); }
-void routeLs( std::string &s ){ IPRINT("diary.txt\tathing.bff\nsomethingelse.m\nanothertning.xyz\n"); }
 
 inline void prompt()
 {
@@ -51,29 +48,18 @@ int main(void)
   if (signal(SIGINT, ignore_sigint) == SIG_ERR)
     printf("[FAILED] to install SIGINT handle\n");
 
-  std::vector<Command> cmds;
-
-  cmds.push_back( Command("exit", routeExit) ) ;
-  cmds.push_back( Command("help", routeHelp) ) ;
-  cmds.push_back( Command("ls", routeLs) ) ;
-
+  Commands cmds;
+  cmds.init();
   std::vector<char> buff;
   try
   {
     while(true)
     {
-      int acc = 0;
       buff.clear();
       get_input( buff );
-      if( buff[0] != '\n' ) // we got nothing
+      if( buff[0] != '\n' ) 
       {
-        for( std::vector<Command>::iterator it = cmds.begin();
-            it != cmds.end();
-            ++it)
-        {
-          acc += it -> mulch(buff);
-        }
-        if( acc == 0 )
+        if( cmds.mulch_all( buff ) == 0 )
           noCmd( buff );
       }
     }
@@ -84,8 +70,6 @@ int main(void)
   }
   return 0;
 }
-
-
 
 void get_input(std::vector<char> &buff)
 {

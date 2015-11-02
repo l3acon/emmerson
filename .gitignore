@@ -13,3 +13,6 @@ shell
 
 # vim files
 *.swp
+
+# binaries
+*.o
