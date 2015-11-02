@@ -16,6 +16,7 @@
 #include <signal.h> 
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 //ma stuff
 #include "colors.h"

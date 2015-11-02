@@ -9,4 +9,5 @@ command.o: command.cpp
 	$(CC) -c command.cpp -o command.o
 
 clean: 
-	rm $(OUT)
+	rm *.o
+	rm -f $(OUT)
