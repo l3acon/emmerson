@@ -28,7 +28,7 @@
 void get_input( std::vector<char> &buff);
 void ignore_sigint( int ignore);
 void routeExit( std::string &s){ IPRINT("goodbye\n"); exit(0); }
-void routeHelp( std::string &s){ IPRINT("This is the help menu:\n\tsomething\n\tsomething\n\tsomething\n"); exit(0); }
+void routeHelp( std::string &s){ IPRINT("This is the help menu:\n\tsomething\n\tsomething\n\tsomething\n"); }
 void routeLs( std::string &s ){ IPRINT("diary.txt\tathing.bff\nsomethingelse.m\nanothertning.xyz\n"); }
 
 inline void prompt()
