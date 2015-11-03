@@ -1,15 +1,17 @@
 CC=g++
+CFLAGS= -O3 #-v
 OUT=shell
 TGT=it.cpp
 
-default: commands.o it.cpp command.o
-	$(CC) $(TGT) -o $(OUT) commands.o command.o
 
-commands.o: commands.cpp command.o
-	$(CC) -c commands.cpp -o commands.o
+default: cmds.o it.cpp command.o
+	$(CC) $(CFLAGS) $(TGT) -o $(OUT) cmds.o command.o
+
+cmds.o: cmds.cpp command.o
+	$(CC) $(CFLAGS)  -c cmds.cpp -o cmds.o
 
 command.o: command.cpp
-	$(CC) -c command.cpp -o command.o
+	$(CC) $(CFLAGS) -c command.cpp -o command.o
 
 clean: 
 	rm *.o

@@ -6,7 +6,8 @@
  *     (1) This thing is always free to use, copy, modify, and distribute.
  *     (2) This thing is provided "as is" without warranty of any kind.
  *      If anything goes awry you assume all responsibility and cost.
- *     (3) You buy me a beer if we meet.*
+ *     (3) You buy me a beer if we meet.
+ *
  */
 
 #include <iostream>
@@ -20,13 +21,13 @@
 
 //ma stuff
 #include "colors.h"
-#include "commands.h"
+#include "cmds.h"
 
 #define BUFFLEN 180
 #define IPRINT(x) printf(x); fflush(stdout);
 
-void get_input( std::vector<char> &buff);
-void ignore_sigint( int ignore);
+void getInput( std::vector<char> &buff);
+void ignoreSigint( int ignore);
 
 inline void prompt()
 {
@@ -45,23 +46,19 @@ void noCmd(std::vector<char> buff)
 
 int main(void)
 {
-  if (signal(SIGINT, ignore_sigint) == SIG_ERR)
+  if (signal(SIGINT, ignoreSigint) == SIG_ERR)
     printf("[FAILED] to install SIGINT handle\n");
 
-  Commands cmds;
-  cmds.init();
+  Cmds avaliable_cmds;
+  avaliable_cmds.init();
   std::vector<char> buff;
   try
   {
     while(true)
     {
       buff.clear();
-      get_input( buff );
-      if( buff[0] != '\n' ) 
-      {
-        if( cmds.mulch_all( buff ) == 0 )
-          noCmd( buff );
-      }
+      getInput( buff );
+      avaliable_cmds.mulchAll( buff );
     }
   }
   catch(std::exception& e)
@@ -71,7 +68,7 @@ int main(void)
   return 0;
 }
 
-void get_input(std::vector<char> &buff)
+void getInput(std::vector<char> &buff)
 {
   prompt();
   do
@@ -79,7 +76,7 @@ void get_input(std::vector<char> &buff)
   while( buff.back() != '\n' );
 }
 
-void ignore_sigint( int ignore)
+void ignoreSigint( int ignore)
 {
   printf("\n# %semmers0n %s%%%s ", KGRN, KYEL, KWHT);
   //IPRINT("\n# emmers0n %% ");
